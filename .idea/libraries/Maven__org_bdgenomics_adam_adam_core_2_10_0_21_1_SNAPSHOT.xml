@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.bdgenomics.adam:adam-core_2.10:0.21.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bdgenomics/adam/adam-core_2.10/0.21.1-SNAPSHOT/adam-core_2.10-0.21.1-20170309.151255-180.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bdgenomics/adam/adam-core_2.10/0.21.1-SNAPSHOT/adam-core_2.10-0.21.1-20170309.151255-180-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bdgenomics/adam/adam-core_2.10/0.21.1-SNAPSHOT/adam-core_2.10-0.21.1-20170309.151255-180-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

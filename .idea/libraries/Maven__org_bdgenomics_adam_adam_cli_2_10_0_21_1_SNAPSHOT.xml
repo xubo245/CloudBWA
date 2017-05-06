@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.bdgenomics.adam:adam-cli_2.10:0.21.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bdgenomics/adam/adam-cli_2.10/0.21.1-SNAPSHOT/adam-cli_2.10-0.21.1-20170309.151336-182.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bdgenomics/adam/adam-cli_2.10/0.21.1-SNAPSHOT/adam-cli_2.10-0.21.1-20170309.151336-182-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bdgenomics/adam/adam-cli_2.10/0.21.1-SNAPSHOT/adam-cli_2.10-0.21.1-20170309.151336-182-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
