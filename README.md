@@ -1,8 +1,6 @@
 # CloudBWA
 CloudBWA: a distributed read mapping algorithms in GCDSS
 
-
-
 ## 1 Building GCDSS
 
 ####1.1 Preparing: we should prepare before run GCDSS.
@@ -12,48 +10,66 @@ CloudBWA: a distributed read mapping algorithms in GCDSS
 - HDFS: https://github.com/apache/hadoop 
 - BWA: https://github.com/lh3/bwa
 - jBWA: https://github.com/lindenb/jbwa
-
  
 ##2.build
 	mvn -DskipTests clean package
 ##3.run
 
-	spark-submit --class com.github.xubo245.gcdss.adam.postProcessing.ReadPostProcessing \
-	 --master spark://MaspterIP:7077 \
+	spark-submit --class org.gcdss.alignment.CloudBWA \
+	 --master spark://219.219.220.149:7077 \
 	 --conf "spark.executor.extraJavaOptions=-Djava.library.path=/home/hadoop/disk2/xubo/lib/" \
 	  --jars /home/hadoop/cloud/adam/lib/adam_2.10-0.23.0-SNAPSHOT.jar \
 	  --executor-memory 20G \
-	GCDSS.jar \
-	$1 $2 $3 $4
+	CloudBWA.jar \
+	$1 $2 $3 $4 $5 $6 $7
 
 Parameter:
 
-	$1: operate type, such as markDuplicate,sort,BQSR，realignIndel
-    $2: reads file location
-    $3: output path
+	$1:index
+    $2:fastq1
+	$3:fastq2
+	$4:output
+	$5:batch
+	$6:numPartition
+	$7:seqindex
 
 For Example:
 
-	for num in 2000000 10000000 20000000
+	for i in 50
 	do
-	for i in {1..5}
-	do
-	fq='/xubo/project/alignment/CloudBWA/g38/time/cloudBWAnewg38L50c'$num'Nhs20Paired12time10num16k1.adam'
-	out='/xubo/project/alignment/CloudBWA/g38/time/cloudBWAnewg38L50c'$num'Nhs20Paired12time10num16k1.markDuplicateI'$i'.adam'
-	vcf='/xubo/callVariant/vcf/vcfSelectAddSequenceDictionaryWithChr.adam'
-	
-	hadoop fs -rm -R -f $out
-	sh testReadPostProcessing.sh "markDuplicate" $fq $out $vcf
-	hadoop fs -rm -R -f $out
-	done
+		for time in  1000
+		do
+			for j in  16000000
+			do
+				for num in  32
+				do
+					for k in {1..1}
+					do
+						out='/xubo/project/alignment/CloudBWA/g38/time/cloudBWAnewg38L'$i'c'$j'Nhs20Paired12time'$time'num'$num'k'$k'.adam'
+						~/cloud/alluxio-1.3.0/bin/alluxio fs rm -R $out
+						file1='alluxio://Master:19998/xubo/project/alignment/sparkBWA/input/g38/newg38L'$i'c'$j'Nhs20Paired1F18.fastq'
+						file2='alluxio://Master:19998/xubo/project/alignment/sparkBWA/input/g38/newg38L'$i'c'$j'Nhs20Paired2F18.fastq'
+						localseqindex='/home/hadoop/disk2/xubo/ref/GRCH38L1Index/GRCH38chr1L3556522.seqIndex'
+						sh testcloudBWAAdamclusterAdam-0.21.1-snapshot.sh $file1 $file2 $out $time $num $localseqindex
+					done
+					~/cloud/alluxio-1.3.0/bin/alluxio fs free $file1
+					done
+			done
+		done
 	done
 
+testcloudBWAAdamclusterAdam-0.21.1-snapshot.sh:
+
+	 spark-submit --class org.gcdss.alignment.CloudBWAAdam \
+	 --master spark://MasterIP:7077 \
+	 --conf "spark.executor.extraJavaOptions=-Djava.library.path=/home/hadoop/disk2/xubo/lib/" \
+	 --jars /home/hadoop/cloud/adam/lib/adam_2.10-0.21.1-SNAPSHOT.jar \
+	  --executor-memory 20G \
+	CloudBWA.jar \
+	/home/hadoop/disk2/xubo/ref/GRCH38L1Index/GRCH38chr1L3556522.fasta \
+	$1 $2 $3 $4 $5 $6
+	 
 more shell example in [sh](./sh) file 
-
-## 4.Append
-   CloudBWA is a distributed read mapping algorithms in GCDSS
-
-   The code of CloudBWA in another github project: [CloudBWA](https://github.com/xubo245/CloudBWA) 
 
 ## Tutorial
 
